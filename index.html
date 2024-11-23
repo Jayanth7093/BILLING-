@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Billing System</h1>
+        <form action="/bill" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            
+            <label for="items">Select Items:</label><br>
+            {% for item, price in items.items() %}
+                <input type="checkbox" id="{{ item }}" name="items" value="{{ item }}">
+                <label for="{{ item }}">{{ item.capitalize() }} - Rs {{ price }}/kg</label><br>
+                <label for="quantity_{{ item }}">Quantity (kg):</label>
+                <input type="number" step="0.1" id="quantity_{{ item }}" name="quantities" min="0"><br><br>
+            {% endfor %}
+            
+            <label for="choice">Would you like to print the bill or send it via email?</label><br>
+            <input type="radio" id="print" name="choice" value="print" required>
+            <label for="print">Print</label><br>
+            <input type="radio" id="email" name="choice" value="email">
+            <label for="email">Email</label><br><br>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html> 
